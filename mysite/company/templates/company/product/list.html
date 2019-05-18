@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {% if category %}{{ category.name }} {% else %} Products {% endif %}
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/card.css' %}" />
+{% endblock %}
+{% block content %}
+   <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+          <div class="blog-post">
+              <div class="row">
+                  {% for product in products %}
+                  <div class="col-lg-4 col-md6 col-sm-12 text-center">
+                    <div class="card-body">
+                        <a href="{{ product.get_absolute_url }}">
+                            <div><img src="{% if product.image %} {{ product.image.url }}
+                            {% else %} {% static 'img/default.jpg' %} {% endif %}" class="image"></div>
+                        </a>
+                        <div class="card-heading">{{ product.name }}</div>
+                        <div class="card-wrapper">Rs. {{ product.price }}</div>
+                    </div>
+                  </div>
+                  {% endfor %}
+              </div>
+          </div><!-- /.blog-post -->
+        </div><!-- /.blog-main -->
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+            <div class="card-body">
+                <div class="card-heading">Categories</div>
+                <div class="card-wrapper">
+                    <ol class="list-unstyled">
+                        <li {% if not category %} class="active"{% endif %}><a href="{% url 'company:product_list' %}">All</a></li>
+                        {% for c in categories %}
+                            <li {% if category.slug == c.slug %} class="active"{% endif %}>
+                                <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+                <div class="card-heading">Companies</div>
+                <div class="card-wrapper">
+                    <ol class="list-unstyled">
+                        <li {% if not category %} class="active"{% endif %}><a href="{% url 'company:product_list' %}">All</a></li>
+                        {% for c in companies %}
+                        <li {% if category.slug == c.slug %} class="active"{% endif %}>
+                            <a href="{{ c.get_absolute_url_cat }}">{{ c.name }}</a>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+          </div><!-- /.blog-sidebar -->
+        </div><!-- /.row -->
+      </div><!-- /.container -->
+  {% endblock %}

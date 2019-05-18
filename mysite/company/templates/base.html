@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>{%block title%}{%endblock%}</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% load static %}
+    <link rel="icon" type="image" href="{% static 'img/default.jpg' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap.css' %}" />
+	{%block script%}{%endblock%}
+	{%block styles%}{%endblock%}
+  </head>
+  <body>
+    <header>
+    {% if  request.session.username %}
+	  <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/company" target="_self">Home</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="about" target="_blank">About</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="contact-us" target="_blank">Contact Us</a>
+          </li>
+        </ul>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav my-2 my-lg-0">
+            <li class="nav-item">
+             <a href="{% url 'login:cart' %}" class="nav-link" id="CART">
+               <i class="fa fa-shopping-cart" style="font-size:24px">{{request.session.cart_items}}</i>
+             </a>
+            </li>
+          </ul>
+          <span class="nav-item dropdown active">
+            <span class="nav-link dropdown-toggle" style="color:#fff;" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img src="{% if image %} {{ image.url }}
+                  {% else %} {% static 'img/default.jpg' %} {% endif %}" style="height:25px; width:25px; border-radius:51%;">
+            </span>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'login:home' %}">{{request.session.username}}</a>
+              <a class="dropdown-item" href="{% url 'login:logout' %}">Logout</a>
+            </div>
+          </span>
+        </div>
+      </nav>
+    {% else %}
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'login:login' %}" target="_self">Home</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="about" target="_blank">About</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="contact-us" target="_blank">Contact Us</a>
+          </li>
+        </ul>
+      </nav>
+    {% endif %}
+    </header>
+    		{%block body%}{%endblock%}
+    {% block content %}
+    {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

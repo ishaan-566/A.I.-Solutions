@@ -1,0 +1,22 @@
+{%extends "base.html"%}
+{%block title%}Login Page{%endblock%}
+{%block body%}
+
+<div class="login">
+  <h2 class="login-header">Log in</h2>
+  <form class="login-container" method="post">
+    {% if error %}
+      <p style="color: white;">{{error}}</p>
+    {% endif %}
+    {% csrf_token %}
+    <!--<div><input type="text" class="login-inputname" placeholder="Username" name="Username" required="required"></div>-->
+    <!--<div><input type="password" class="login-inputname" placeholder="Password" name="password" required="required"></div>-->
+    {{ form }}
+    <center>
+      <input type="submit" class="submitbtn" value="Login">
+      <a href="{% url 'login:register'%}"><input type="button" class="submitbtn" value="Signup"></a>
+    </center>
+  </form>
+</div>
+
+{%endblock%}

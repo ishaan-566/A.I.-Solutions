@@ -1,0 +1,18 @@
+{%extends "base.html"%}
+{%block title%}Signup Page{%endblock%}
+{%block body%}
+
+<div class="login">
+    <h2 class="login-header">Register Here</h2>
+    {% if error %}
+        <p style="color: red;">{{error}}</p>
+    {% endif %}
+    <form class="login-container" method="post" enctype = "multipart/form-data">
+  		{% csrf_token %}
+  		{{form}}
+        <br>
+        <center><button type="submit" class="submitbtn">Register</button></center>
+  	</form>
+</div>
+
+{%endblock%}

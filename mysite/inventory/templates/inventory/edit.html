@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/card.css' %}" />
+{% endblock %}
+{% block content %}
+    <div class="row list-container">
+        <div class="text-center">
+            <div class="card-body">
+                <div><img src="{% if stock.product.image %} {{ stock.product.image.url }}
+                  {% else %} {% static 'img/default.jpg' %} {% endif %}" class="image"></div>
+                <div class="card-heading">{{ stock.product.name }}</div>
+                <a href="{{ stock.product.category.get_absolute_url }}" class="click-btn" target="_blank">Category: {{ stock.product.category }}</a>
+                <a href="{{ stock.product.company.get_absolute_url }}" class="click-btn" target="_blank">Company: {{ stock.product.company }}</a>
+                <br><br>
+                <form action="/inventory/update/{{ stock.id }}/{{ty}}" method="post">
+                  {% csrf_token %}
+                  <input type="number" name="quantity">
+                  <input type="submit" value="Update" class="click-btn">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

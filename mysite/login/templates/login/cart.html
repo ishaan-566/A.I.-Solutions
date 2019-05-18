@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Cart{% endblock %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'styles/card.css' %}">
+{% endblock %}
+{% block body %}
+<form method="POST" action="/login/checkout">
+    {% csrf_token %}
+    <div class="row list-container">
+                {% for i in item %}
+        <div class="text-center">
+            <div class="card-body">
+                <div><img src="{% if i.product.image %} {{ i.product.image.url }}
+                   {% else %} {% static 'img/default.jpg' %} {% endif %}" class="image"></div>
+                <div class="card-heading">{{i.product.name}}</div>
+                <div class="card-heading"><i class="fa fa-shopping-cart" style="font-size:24px"></i> {{i.Quantity}}</div>
+                <div class="click-wrapper">
+                    <!--<a href="{{ i.update }}" class="click-btn" target="_blank">Update</a>-->
+                    <a href="{{ i.deleteQuery }}" class="click-btn">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% if item.count is not 0 %}
+        <input class="click-btn" type="submit" value="Checkout">
+    {% endif %}
+</form>
+{% endblock %}

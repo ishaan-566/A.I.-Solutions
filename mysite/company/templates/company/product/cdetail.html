@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {{ company.name }}
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/card.css' %}" />
+{% endblock %}
+{% block content %}
+   <div class="row list-container">
+        <div class="text-center">
+            <div class="card-body">
+                <div><img src="{% if company.image %} {{ company.image.url }}
+                  {% else %} {% static 'img/default.jpg' %} {% endif %}" class="image"></div>
+                <div class="card-heading">{{ company.name }}</div>
+                <div class="card-desc">{{ company.description|safe|linebreaksbr }}</div>
+                <div><span>Ratings:</span>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </div>
+                <div class="click-wrapper">
+                    <a href="{{company.get_absolute_url_cat}}" class="click-btn" target="_blank">Products</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

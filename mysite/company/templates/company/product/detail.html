@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {{ product.name }}
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/card.css' %}" />
+{% endblock %}
+{% block content %}
+   <div class="row list-container">
+        <div class="text-center">
+            <div class="card-body">
+                <div><img src="{% if product.image %} {{ product.image.url }}
+                  {% else %} {% static 'img/default.jpg' %} {% endif %}" class="image"></div>
+                <div class="card-heading">{{ product.name }}</div>
+                <div class="card-desc">{{ product.description|safe|linebreaksbr}}</div>
+                <div class="click-wrapper">Price : Rs {{ product.price }}</div>
+                <a href="{{ product.category.get_absolute_url }}" class="click-btn" target="_blank">Category: {{ product.category }}</a>
+                <a href="{{ product.company.get_absolute_url }}" class="click-btn" target="_blank">Company: {{ product.company }}</a>
+                <br><br>
+                <form action="{{product.add_cart}}" method="post">
+                  {% csrf_token %}
+                  {{ form }}
+                  <i class="fa fa-shopping-cart" style="font-size:24px"></i>
+                  <input type="submit" value="Add to Cart" class="click-btn">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
